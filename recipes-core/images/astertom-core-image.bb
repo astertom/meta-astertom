@@ -22,6 +22,7 @@ IMAGE_EXTRA_LIBS = " \
     libsqlite3 \
     libusb1 \
     libgpiod \
+    libgpiodcxx \
 "
 IMAGE_CORE_FONTS = " \
     fontconfig \
