@@ -20,4 +20,5 @@ ICECC_USER_PACKAGE_BL += " \
     tar \
     gawk \
     pango \
+    json-c \
 "
