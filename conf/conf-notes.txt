@@ -4,4 +4,3 @@ You can now run 'bitbake <target>'
 
 Common targets are:
     astertom-core-image
-    astertom-qt5-image
