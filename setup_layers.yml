@@ -1,0 +1,71 @@
+- name: Prepare yocto layers
+  strategy: free
+  hosts: all
+  connection: local
+  vars:
+    dest_dir: "{{ clonedir }}"
+    machine: "{{ board | default('raspberrypi4-64') }}"
+    project_dir: "{{ playbook_dir }}"
+    poky_version: "kirkstone"
+    oe_version: "kirkstone"
+    rpi_version: "kirkstone"
+  tasks:
+    - name: Create base directory
+      file: 
+        path: "{{ dest_dir }}"
+        state: directory
+        mode: 0755
+        
+    - name: "Clone poky"
+      git:
+        repo: git://git.yoctoproject.org/poky.git
+        dest: "{{ dest_dir }}/poky"
+        version: "{{ poky_version }}"
+        force: yes
+        accept_hostkey: yes
+    
+    - name: "Clone meta-openembedded layer"
+      git:
+        repo: git://git.openembedded.org/meta-openembedded
+        dest: "{{ dest_dir }}/poky/meta-openembedded/"
+        version: "{{ oe_version }}"
+        force: yes
+        accept_hostkey: yes
+    
+    - name: "Clone meta-raspberrypi layer"
+      git:
+        repo: git://git.yoctoproject.org/meta-raspberrypi.git
+        dest: "{{ dest_dir }}/poky/meta-raspberrypi/"
+        version: "{{ rpi_version }}"
+        force: yes
+        accept_hostkey: yes
+
+    - name: "Create machine directory with conf directory"
+      file:
+        path: "{{ dest_dir }}/build_{{ machine }}/conf"
+        state: directory
+        mode: '755'
+
+    - name: "Copy local.conf file"
+      copy:
+        src: "{{ project_dir }}/examples/localconf/{{ machine }}_local.conf"
+        dest: "{{ dest_dir }}/build_{{ machine }}/conf/local.conf"
+        remote_src: true
+
+    - name: "Copy bblayers.conf file"
+      copy:
+        src: "{{ project_dir }}/examples/bblayers/{{ machine }}_bblayers.conf"
+        dest: "{{ dest_dir }}/build_{{ machine }}/conf/bblayers.conf"
+        remote_src: true
+
+    - name: "Configure bblayers for proper path"
+      replace:
+        path: "{{ dest_dir }}/build_{{ machine }}/conf/bblayers.conf"
+        regexp: "[$][{]HOME[}]/yocto"
+        replace: "{{ dest_dir }}"
+
+    - name: "Add project clone directory to bblayers"
+      lineinfile:
+        path: "{{ dest_dir }}/build_{{ machine }}/conf/bblayers.conf"
+        line: "    {{ project_dir }} \\"
+        insertafter: "{{ dest_dir }}/poky/meta-poky"
