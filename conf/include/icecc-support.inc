@@ -1,24 +1,24 @@
 ICECC_PARALLEL_MAKE = "-j 20"
 INHERIT += "icecc"
-ICECC_USER_CLASS_BL += "native nativesdk"
-ICECC_USER_PACKAGE_BL += " \
-    libunistring \
-    gnutls \
+ICECC_CLASS_DISABLE += "native nativesdk"
+ICECC_RECIPE_DISABLE += " \
     coreutils \
-    m4 \
-    wget \
-    nano \
-    findutils \
-    gdb \
-    pixman \
-    patch \
-    sed \
-    gzip \
-    grep \
-    diffutils \
     cpio \
-    tar \
+    diffutils \
+    findutils \
     gawk \
-    pango \
+    gdb \
+    gnutls \
+    grep \
+    gzip \
     json-c \
+    libunistring \
+    m4 \
+    nano \
+    pango \
+    patch \
+    pixman \
+    sed \
+    tar \
+    wget \
 "

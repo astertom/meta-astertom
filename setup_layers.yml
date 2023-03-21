@@ -1,5 +1,4 @@
 - name: Prepare yocto layers
-  strategy: free
   hosts: all
   connection: local
   vars:
@@ -9,63 +8,66 @@
     poky_version: "kirkstone"
     oe_version: "kirkstone"
     rpi_version: "kirkstone"
+    qt_version: "v6.4.2"
   tasks:
     - name: Create base directory
-      file: 
+      ansible.builtin.file:
         path: "{{ dest_dir }}"
         state: directory
-        mode: 0755
-        
+        mode: '755'
+
     - name: "Clone poky"
-      git:
+      ansible.builtin.git:
         repo: git://git.yoctoproject.org/poky.git
         dest: "{{ dest_dir }}/poky"
         version: "{{ poky_version }}"
-        force: yes
-        accept_hostkey: yes
-    
+        force: true
+        accept_hostkey: true
+
     - name: "Clone meta-openembedded layer"
-      git:
+      ansible.builtin.git:
         repo: git://git.openembedded.org/meta-openembedded
         dest: "{{ dest_dir }}/poky/meta-openembedded/"
         version: "{{ oe_version }}"
-        force: yes
-        accept_hostkey: yes
-    
+        force: true
+        accept_hostkey: true
+
     - name: "Clone meta-raspberrypi layer"
-      git:
+      ansible.builtin.git:
         repo: git://git.yoctoproject.org/meta-raspberrypi.git
         dest: "{{ dest_dir }}/poky/meta-raspberrypi/"
         version: "{{ rpi_version }}"
-        force: yes
-        accept_hostkey: yes
+        force: true
+        accept_hostkey: true
 
     - name: "Create machine directory with conf directory"
-      file:
+      ansible.builtin.file:
         path: "{{ dest_dir }}/build_{{ machine }}/conf"
         state: directory
         mode: '755'
 
     - name: "Copy local.conf file"
-      copy:
+      ansible.builtin.copy:
         src: "{{ project_dir }}/examples/localconf/{{ machine }}_local.conf"
         dest: "{{ dest_dir }}/build_{{ machine }}/conf/local.conf"
         remote_src: true
+        mode: '644'
 
     - name: "Copy bblayers.conf file"
-      copy:
+      ansible.builtin.copy:
         src: "{{ project_dir }}/examples/bblayers/{{ machine }}_bblayers.conf"
         dest: "{{ dest_dir }}/build_{{ machine }}/conf/bblayers.conf"
         remote_src: true
+        mode: '644'
 
     - name: "Configure bblayers for proper path"
-      replace:
+      ansible.builtin.replace:
         path: "{{ dest_dir }}/build_{{ machine }}/conf/bblayers.conf"
         regexp: "[$][{]HOME[}]/yocto"
         replace: "{{ dest_dir }}"
 
     - name: "Add project clone directory to bblayers"
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: "{{ dest_dir }}/build_{{ machine }}/conf/bblayers.conf"
         line: "    {{ project_dir }} \\"
         insertafter: "{{ dest_dir }}/poky/meta-poky"

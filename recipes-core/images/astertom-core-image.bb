@@ -7,14 +7,15 @@ IMAGE_LINGUAS = "pl-pl"
 inherit core-image
 
 CORE_OS_PACKAGES = " \
+    alsa-plugins \
+    alsa-utils \
+    ca-certificates \
     kernel-modules \
     openssh \
     openssh-keygen \
     openssh-sftp-server \
-    tzdata \
-    alsa-utils \
-    alsa-plugins \
     packagegroup-core-full-cmdline \
+    tzdata \
 "
 IMAGE_EXTRA_LIBS = " \
     zlib \
@@ -45,12 +46,18 @@ IMAGE_CORE_TOOLS = " \
     usbutils \
     htop \
 "
+WIFI_SUPPORT = " \
+    crda \
+    iw \
+    wpa-supplicant \
+"
 
 IMAGE_INSTALL += " \
     ${CORE_OS_PACKAGES} \
     ${IMAGE_EXTRA_LIBS} \
     ${IMAGE_CORE_FONTS} \
     ${IMAGE_CORE_TOOLS} \
+    ${WIFI_SUPPORT} \
 "
 
 set_local_timezone() {
