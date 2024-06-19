@@ -47,7 +47,6 @@ IMAGE_CORE_TOOLS = " \
     htop \
 "
 WIFI_SUPPORT = " \
-    crda \
     iw \
     wpa-supplicant \
 "

@@ -1,0 +1,12 @@
+header:
+  version: 17
+
+local_conf_header:
+  rpi: |
+    RPI_USE_U_BOOT = "1"
+    ENABLE_UART="1"
+    GPU_MEM_512="256"
+    GPU_MEM_1024="512"
+    BOOT_DELAY="0"
+    BOOT_DELAY_MS="0"
+    DISABLE_SPLASH="1"

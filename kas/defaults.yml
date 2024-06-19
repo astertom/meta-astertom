@@ -1,0 +1,16 @@
+header:
+  version: 17
+
+local_conf_header:
+  common: |
+    LICENSE_FLAGS_ACCEPTED = "commercial synaptics-killswitch"
+    DISTRO_FEATURES += "ext2 bluetooth alsa pam opengl"
+    DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio"
+    PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
+    PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
+    MACHINE_FEATURES:remove = "apm"
+    CONF_VERSION = "2"
+    PACKAGE_CLASSES = "package_ipk"
+    SDKMACHINE = "x86_64"
+    USER_CLASSES = "buildstats"
+    PATCHRESOLVE = "noop"

@@ -1,0 +1,13 @@
+header:
+  version: 17
+  includes:
+    - kas/defaults.yml
+    - kas/storage.yml
+    - kas/rpi.yml
+    - kas/layers.yml
+    #- kas/icecc.yml
+
+machine: raspberrypi4-64
+distro: astertom
+target:
+  - astertom-core-image

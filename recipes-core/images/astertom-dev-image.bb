@@ -1,3 +1,3 @@
 require astertom-core-image.bb
 
-IMAGE_FEATURES:append = "debug-tweeks"
+IMAGE_FEATURES:append = " debug-tweaks"
