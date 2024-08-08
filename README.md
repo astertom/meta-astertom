@@ -21,28 +21,22 @@ Optional:
 
 ## Environment preparation
 
-### General informations
+### General information
 
-Before starting building, make sure that all required tools are installed on your host machine. For more informations how to configure your machine visit [Yocto project page](https://yoctoproject.org)
+Before starting building, make sure that all required tools are installed on your host machine. For more informations how to configure your machine visit [Yocto project page documentation](https://docs.yoctoproject.org/index.html)
 
-### By ansible playbook
+### Using [kas](https://kas.readthedocs.io/en/latest/intro.html)
 
-You can use [setup_layser.yml](./setup_layers.yml) [ansible](https://www.ansible.com/) playbook to clone all required layers inside specific directory on your host machine, and set example configuration files: `local.conf` and `bblayers.conf`
-
-To clone all required layers and setup environment run:
+Clone required layers
 
 ```bash
-ansbile-playbook -i localhost, -e "clonedir=[path_to_dir]" setup_layers.yml
+kas checkout meta-astertom/kas-rpi.yml
 ```
 
-Available variables:
-
-- `clone_dir` (directory where all layers will be cloned and machine specific directories will be created)
-
-Example
+Build `astertom-core-image
 
 ```bash
-ansbile-playbook -i localhost, -e "clonedir=/home/astertom/yocto" setup_layers.yml
+kas build meta-astertom/kas-rpi.yml
 ```
 
 ### Manual
